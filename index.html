@@ -505,7 +505,7 @@
                     <div class="direction north">N</div>
                     <div class="direction south">S</div>
                     <div class="direction east">E</div>
-                    <div class="direction west">O</div>
+                    <div class="direction west">W</div>
                 </div>
                 <div class="horizon-line"></div>
             </div>
@@ -732,7 +732,10 @@
                 const data = await response.json();
                 
                 const city = data.city || data.locality || 'Ville inconnue';
-                const country = data.countryName || 'Pays inconnu';
+                let country = data.countryName || 'Pays inconnu';
+                
+                // Nettoyer le nom du pays (enlever les articles entre parenthèses)
+                country = country.replace(/\s*\([^)]*\)/g, '');
                 
                 document.getElementById('cityName').textContent = `${city}, ${country}`;
             } catch (error) {
@@ -914,7 +917,7 @@
                     description: `Observation optimale de la ${phaseNames[phaseIndex].toLowerCase()}`,
                     details: {
                         rise: `Lever: ${Math.floor(Math.random() * 12) + 6}h${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`,
-                        set: `Coucher: ${Math.floor(Math.random() * 12) + 18}h${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`
+                        set: `Coucher: ${Math.floor(Math.random() * 12) + 6 + 12}h${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`
                     }
                 });
             }
